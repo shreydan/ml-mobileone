@@ -182,12 +182,11 @@ class MobileOneBlock(nn.Module):
         self.reparam_conv.weight.data = kernel
         self.reparam_conv.bias.data = bias
 
-        # Delete un-used branches
-        for para in self.parameters():
-            para.detach_()
-        self.__delattr__("rbr_conv")
-        self.__delattr__("rbr_scale")
-        # commenting this to allow torch.jit.script
+        # commenting out these unused branches to allow torch.jit.script
+        # for para in self.parameters():
+        #     para.detach_()
+        # self.__delattr__("rbr_conv")
+        # self.__delattr__("rbr_scale")
         # if hasattr(self, 'rbr_skip'):
         #     self.__delattr__('rbr_skip')
 
