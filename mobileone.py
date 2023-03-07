@@ -190,7 +190,7 @@ class MobileOneBlock(nn.Module):
         # if hasattr(self, 'rbr_skip'):
         #     self.__delattr__('rbr_skip')
 
-        self.inference_mode = True
+        # self.inference_mode = True
 
     def _get_kernel_bias(self) -> Tuple[torch.Tensor, torch.Tensor]:
         """Method to obtain re-parameterized kernel and bias.
