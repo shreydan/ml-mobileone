@@ -182,15 +182,15 @@ class MobileOneBlock(nn.Module):
         self.reparam_conv.weight.data = kernel
         self.reparam_conv.bias.data = bias
 
-        # commenting out these unused branches to allow torch.jit.script
-        # for para in self.parameters():
-        #     para.detach_()
-        # self.__delattr__("rbr_conv")
-        # self.__delattr__("rbr_scale")
-        # if hasattr(self, 'rbr_skip'):
-        #     self.__delattr__('rbr_skip')
+        # remove un-unused branches
+        for para in self.parameters():
+            para.detach_()
+        self.__delattr__("rbr_conv")
+        self.__delattr__("rbr_scale")
+        if hasattr(self, "rbr_skip"):
+            self.__delattr__("rbr_skip")
 
-        # self.inference_mode = True
+        self.inference_mode = True
 
     def _get_kernel_bias(self) -> Tuple[torch.Tensor, torch.Tensor]:
         """Method to obtain re-parameterized kernel and bias.
