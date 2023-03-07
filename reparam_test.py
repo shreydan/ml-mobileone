@@ -36,7 +36,11 @@ if __name__ == "__main__":
     model = Model()
     model.eval()
     eval_model = reparameterize_model(model)
+    # not working coz of reparameterization
+    # script_model = torch.jit.trace(eval_model)
+    # using torch.jit.trace instead
+    # only downside is gotta preset the input size
     trace_model = torch.jit.trace(eval_model, torch.rand(1, 3, 128, 128))
 
     optimized_model = optimize_for_mobile(trace_model)
-    optimized_model._save_for_lite_interpreter("gap_mobileone.ptl")
+    optimized_model._save_for_lite_interpreter("model.ptl")
